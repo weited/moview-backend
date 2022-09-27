@@ -59,3 +59,35 @@ SELECT 'Fall',
        '2022-09-24 13:45:05 +00:00'
 FROM genre
 WHERE genre.name = 'Thriller';
+
+INSERT INTO role (role_type)
+VALUES ('Admin'),
+       ('General');
+
+INSERT INTO user_table (role_id, username, last_name, first_name, password, email, profile_img_url, created_time, updated_time)
+SELECT
+    role.id,
+    'fingerbomb',
+    'John',
+    'David',
+    'fingerbomb123',
+    'fingerbomb@gmail.com',
+    'https://t3.ftcdn.net/jpg/03/91/19/22/360_F_391192211_2w5pQpFV1aozYQhcIw3FqA35vuTxJKrB.jpg',
+    '2022-09-25 00:24:20 +00:00',
+    '2022-09-25 00:24:20 +00:00'
+FROM role
+WHERE role.role_type = 'Admin';
+
+INSERT INTO user_table (role_id, username, last_name, first_name, password, email, profile_img_url, created_time, updated_time)
+SELECT
+    role.id,
+    'rosemaryisle',
+    'Sally',
+    'Kim',
+    'rosemaryisle123',
+    'rosemaryisle@gmail.com',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxqMcwpt4bGb4Zd486baWHsccUtOhr6tfraw&usqp=CAU',
+    '2022-09-25 09:59:20 +00:00',
+    '2022-09-25 09:59:20 +00:00'
+FROM role
+WHERE role.role_type = 'General';
