@@ -37,3 +37,21 @@ CREATE TABLE user_table
     created_time TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_time TIMESTAMP WITH TIME ZONE NOT NULL
 );
+
+CREATE TABLE tag(
+	id			            BIGSERIAL  		         PRIMARY KEY,
+	tag_name	            VARCHAR(255)	         NOT NULL,
+	created_time            TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_time            TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE post
+(
+    id                  BIGSERIAL                   PRIMARY KEY,
+    movie_id            BIGINT                      NOT NULL REFERENCES movie (id),
+    author_id           BIGINT                      NOT NULL REFERENCES user_table (id),
+	tag_id    	        BIGINT                      NOT NULL REFERENCES tag (id),
+    contents            VARCHAR(2000)		        NOT NULL,
+    created_time        TIMESTAMP WITH TIME ZONE    NOT NULL,
+    updated_time        TIMESTAMP WITH TIME ZONE    NOT NULL
+);
