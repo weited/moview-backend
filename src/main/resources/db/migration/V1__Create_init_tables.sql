@@ -1,6 +1,6 @@
 CREATE TABLE "genre"
 (
-    id   SERIAL PRIMARY KEY,
+    id   BIGSERIAL PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
 
@@ -8,8 +8,8 @@ CREATE TABLE "movie"
 (
     id             BIGSERIAL PRIMARY KEY,
     name           VARCHAR(255)             NOT NULL,
-    genre_id       INTEGER                  NOT NULL REFERENCES "genre" (id),
-    year           INTEGER,
+    genre_id       BIGINT                   NOT NULL REFERENCES "genre" (id),
+    year           CHAR(4),
     director       VARCHAR(128),
     actor          VARCHAR(255),
     description    VARCHAR(1000),
@@ -20,14 +20,14 @@ CREATE TABLE "movie"
 
 CREATE TABLE "role"
 (
-    id        SERIAL PRIMARY KEY,
+    id        BIGSERIAL PRIMARY KEY,
     role_type VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE "user"
 (
     id              BIGSERIAL PRIMARY KEY,
-    role_id         INTEGER                  NOT NULL REFERENCES "role" (id),
+    role_id         BIGINT                   NOT NULL REFERENCES "role" (id),
     username        VARCHAR(255) UNIQUE      NOT NULL,
     first_name      VARCHAR(128)             NOT NULL,
     last_name       VARCHAR(128)             NOT NULL,
