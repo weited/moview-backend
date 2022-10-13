@@ -1,14 +1,16 @@
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
   servlet:
     context-path: /api/v1
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: admin
+    url: jdbc:postgresql://${POSTGRES_URL:localhost:5432/postgres}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:admin}
 
   jpa:
     database: postgresql
@@ -26,9 +28,9 @@ spring:
   flyway:
     enabled: true
     schemas: moview
-    url: jdbc:postgresql://localhost:5432/postgres
-    user: postgres
-    password: admin
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
 # actuator
 management:
