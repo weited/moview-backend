@@ -29,11 +29,11 @@ CREATE TABLE "user"
     id              BIGSERIAL PRIMARY KEY,
     role_id         BIGINT                   NOT NULL REFERENCES "role" (id),
     username        VARCHAR(255) UNIQUE      NOT NULL,
-    first_name      VARCHAR(128)             NOT NULL,
-    last_name       VARCHAR(128)             NOT NULL,
-    password        CHAR(64)                 NOT NULL,
+    first_name      VARCHAR(128),
+    last_name       VARCHAR(128),
+    password        VARCHAR(64)                 NOT NULL,
     email           VARCHAR(255) UNIQUE      NOT NULL,
-    profile_img_url VARCHAR(255),
+    profile_img_url  VARCHAR(255),
     created_time    TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_time    TIMESTAMP WITH TIME ZONE NOT NULL
 );

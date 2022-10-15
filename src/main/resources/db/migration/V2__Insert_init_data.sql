@@ -78,17 +78,7 @@ SELECT role.id,
 FROM role
 WHERE role.role_type = 'admin';
 
-INSERT INTO "user" (role_id, username, first_name, last_name, password, email, created_time, updated_time)
-SELECT role.id,
-       'moviewadmin',
-       'Admin',
-       'Moview',
-       'admin123456',
-       'moviewadmin@gmail.com',
-       '2022-09-25 00:24:20 +00:00',
-       '2022-09-25 00:24:20 +00:00'
-FROM role
-WHERE role.role_type = 'admin';
+
 
 INSERT INTO "user" (role_id, username, first_name, last_name, password, email, profile_img_url, created_time,
                     updated_time)
@@ -103,6 +93,18 @@ SELECT role.id,
        '2022-09-25 09:59:20 +00:00'
 FROM role
 WHERE role.role_type = 'general';
+
+INSERT INTO "user" (role_id, username, first_name, last_name, password, email, created_time, updated_time)
+SELECT role.id,
+       'moviewadmin',
+       'Admin',
+       'Moview',
+       'admin123456',
+       'moviewadmin@gmail.com',
+       '2022-09-25 00:24:20 +00:00',
+       '2022-09-25 00:24:20 +00:00'
+FROM role
+WHERE role.role_type = 'admin';
 
 INSERT INTO "user" (role_id, username, first_name, last_name, password, email, created_time, updated_time)
 SELECT role.id,
