@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME        = "moview-backend"
+    }
+
+    stages {
+        stage('Cleanup docker space') {
+            steps {
+                echo 'Cleaning docker space ...'
+                sh 'docker system prune -f'
+                sh 'chmod +x gradlew'
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                echo 'Building the docker image ... '
+                sh 'docker build -t ${IMAGE_NAME}:latest .'
+            }
+        }
+
+        stage('Push image') {
+            steps {
+                echo 'Pushing image to ECR'
+                withAWS(credentials: 'jenkins_aws', region: 'ap-southeast-2') {
+                    sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/j7g5d1x6"
+                    sh "docker tag ${IMAGE_NAME}:latest public.ecr.aws/j7g5d1x6/${IMAGE_NAME}:latest"
+                    sh "docker push public.ecr.aws/j7g5d1x6/${IMAGE_NAME}:latest"
+                }
+            }
+        } 
+    }
+
+    post {
+		always {
+			cleanWs(cleanWhenNotBuilt: true,
+				deleteDirs: true,
+				disableDeferredWipeout: true,
+				notFailBuild: true,
+				patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+				[pattern: '.propsfile', type: 'EXCLUDE']]
+			)}
+		success {
+			echo "WELL DONE!"
+			bitbucketStatusNotify(buildState: 'SUCCESSFUL')
+		}
+		failure {
+			echo "FAILED"
+			bitbucketStatusNotify(buildState: 'FAILED')
+		}
+	}
+}
