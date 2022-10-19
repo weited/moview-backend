@@ -16,6 +16,8 @@ public class CommentPostDto {
     @Size(max = 800, message = "Comment text must be provided.")
     private String text;
 
+    private long parentId;
+
     @NotNull(message = "Post must be provided.")
     private long postId;
 

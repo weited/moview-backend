@@ -10,11 +10,12 @@ import com.yourview.moview.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
 @Service
-public record CommentService(CommentRepository commentRepository, CommentMapper commentMapper) {
+public record CommentService(CommentRepository commentRepository, CommentMapper commentMapper, UserService userService) {
     private static final String RESOURCE = "Comment";
 
     public List<CommentGetDto> getAllComments() {
@@ -23,7 +24,10 @@ public record CommentService(CommentRepository commentRepository, CommentMapper 
 
     public CommentGetDto createNewComment(CommentPostDto commentPostDto) {
         Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
-//        comment.setUser(userService.find(commentPostDto.getUserId());
+        comment.setUser(userService.find(commentPostDto.getUserId()));
+        if(commentPostDto.getParentId() != 0L){
+            comment.setParentComment(find(commentPostDto.getParentId()));
+        }
         return commentMapper.commentToCommentGetDto(commentRepository.save(comment));
     }
 
@@ -31,6 +35,25 @@ public record CommentService(CommentRepository commentRepository, CommentMapper 
 
         return commentMapper.commentToCommentGetDto(find(commentId));
 
+    }
+    public List<CommentGetDto> getCommentByPostId(Long postId) {
+        List<Comment> allResults = commentRepository.findAll().stream().filter(comment -> Objects.equals(comment.getUser().getId(), postId)).toList();
+        List<CommentGetDto> allParentComments = allResults.stream().filter(comment -> Objects.isNull(comment.getParentComment())).map(commentMapper::commentToCommentGetDto).toList();
+        List<Comment> allChildComments = commentRepository.findAll().stream().filter(comment -> Objects.equals(comment.getUser().getId(), postId)).toList();
+         allParentComments.forEach(c -> {
+            if (Objects.isNull(c.getParentComment())){
+                c.setChildComment(allChildComments.stream().filter(comment -> !Objects.isNull(comment.getParentComment())).map((childComments) -> {
+                    Comment comment = new Comment();
+                    comment.setId(childComments.getId());
+                    comment.setUpdatedTime(childComments.getUpdatedTime());
+                    comment.setCreatedTime(childComments.getCreatedTime());
+                    comment.setText(childComments.getText());
+                    comment.setUser(childComments.getUser());
+                    return comment;
+                }).toList());
+            }
+        });
+        return allParentComments;
     }
 
     public CommentGetDto updateComment(Long commentId, CommentPatchDto commentPatchDto) {

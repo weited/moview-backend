@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/comments")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
@@ -21,7 +21,10 @@ public class CommentController {
     public List<CommentGetDto> getAllComments() {
         return commentService.getAllComments();
     }
-
+    @GetMapping("/post/{postId}")
+    public List<CommentGetDto> getCommentsByPostId(@PathVariable Long postId) {
+        return commentService.getCommentByPostId(postId);
+    }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CommentGetDto createComment(@Valid @RequestBody CommentPostDto commentPostDto) {
