@@ -6,12 +6,17 @@ VALUES ('Action'),
        ('Mystery'),
        ('Sci-Fi'),
        ('Animation'),
-       ('Thriller');
+       ('Thriller'),
+       ('Crime'),
+       ('Romance'),
+       ('Horror');
 
-INSERT INTO movie (name, genre_id, year, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Interstellar',
        genre.id,
        '2014',
+       '8.6',
        'Christopher Nolan',
        'Matthew McConaughey, Anne Hathaway, Jessica Chastain',
        'In Earth''s future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth''s population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind''s new home.',
@@ -21,10 +26,12 @@ SELECT 'Interstellar',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Shawshank Redemption',
        genre.id,
        '1994',
+       '9.3',
        'Frank Darabont',
        'Tim Robbins, Morgan Freeman, Bob Gunton',
        'Andy Dufresne (Tim Robbins) is sentenced to two consecutive life terms in prison for the murders of his wife and her lover and is sentenced to a tough prison. However, only Andy knows he didn''t commit the crimes. While there, he forms a friendship with Red (Morgan Freeman), experiences brutality of prison life, adapts, helps the warden, etc., all in 19 years.',
@@ -34,10 +41,12 @@ SELECT 'The Shawshank Redemption',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'WALL·E',
        genre.id,
        '2008',
+       '8.4',
        'Andrew Stanton',
        'Ben Burtt (voice), Elissa Knight (voice), Jeff Garlin (voice)',
        'WALL-E, short for Waste Allocation Load Lifter Earth-class, is the last robot left on Earth. He spends his days tidying up the planet, one piece of garbage at a time. But during 700 years, WALL-E has developed a personality, and he''s more than a little lonely. Then he spots EVE (Elissa Knight), a sleek and shapely probe sent back to Earth on a scanning mission. Smitten WALL-E embarks on his greatest adventure yet when he follows EVE across the galaxy.',
@@ -47,13 +56,15 @@ SELECT 'WALL·E',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Fall',
        genre.id,
        '2022',
+       '6.4',
        'Scott Mann',
        'Grace Caroline Currey, Virginia Gardner, Mason Gooding',
-       'For best friends Becky (Grace Caroline Currey) and Hunter (Virginia Gardner), life is all about conquering fears and pushing limits. But after they climb 2,000 feet to the top of a remote, abandoned radio tower, they find themselves stranded with no way down. Now Becky and Hunter''s expert climbing skills will be put to the ultimate test as they desperately fight to survive the elements, a lack of supplies, and vertigo-inducing heights in this adrenaline-fueled thriller co-starring Jeffery Dean Morgan.',
+       'For best friends Becky (Grace Caroline Currey) and Hunter (Virginia Gardner), life is all about conquering fears and pushing limits. But after they climb 2,000 feet to the top of a remote, abandoned radio tower, they find themselves stranded with no way down. Now Becky and Hunter''s expert climbing skills will be put to the ultimate test as they desperatingly fight to survive the elements, a lack of supplies, and vertigo-inducing heights in this adrenaline-fueled thriller co-starring Jeffery Dean Morgan.',
        'https://cdn.shopify.com/s/files/1/0057/3728/3618/products/fall_lp0sphrl_480x.progressive.jpg?v=1662663929',
        '2022-09-24 13:45:05 +00:00',
        '2022-09-24 13:45:05 +00:00'
@@ -118,9 +129,9 @@ SELECT role.id,
 FROM role
 WHERE role.role_type = 'general';
 
-
 -- movies update
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'John Wick',
        genre.id,
        '2014',
@@ -134,7 +145,8 @@ SELECT 'John Wick',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Mission: Impossible',
        genre.id,
        '1996',
@@ -148,7 +160,8 @@ SELECT 'Mission: Impossible',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Wrath of Man',
        genre.id,
        '2021',
@@ -162,7 +175,8 @@ SELECT 'Wrath of Man',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Extraction',
        genre.id,
        '2020',
@@ -176,7 +190,8 @@ SELECT 'Extraction',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Mulan',
        genre.id,
        '2020',
@@ -190,7 +205,8 @@ SELECT 'Mulan',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Nobody',
        genre.id,
        '2021',
@@ -204,7 +220,8 @@ SELECT 'Nobody',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Shooter',
        genre.id,
        '2007',
@@ -218,7 +235,8 @@ SELECT 'Shooter',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Rumble in the Bronx',
        genre.id,
        '1995',
@@ -232,7 +250,8 @@ SELECT 'Rumble in the Bronx',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Kiss of the Dragon',
        genre.id,
        '2001',
@@ -246,7 +265,8 @@ SELECT 'Kiss of the Dragon',
 FROM genre
 WHERE genre.name = 'Action';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'First Blood',
        genre.id,
        '1982',
@@ -262,7 +282,8 @@ WHERE genre.name = 'Action';
 
 -- Drama--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Bucket List',
        genre.id,
        '2007',
@@ -276,7 +297,8 @@ SELECT 'The Bucket List',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Pursuit of Happyness',
        genre.id,
        '2006',
@@ -290,7 +312,8 @@ SELECT 'The Pursuit of Happyness',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Imitation Game',
        genre.id,
        '2014',
@@ -304,7 +327,8 @@ SELECT 'The Imitation Game',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Green Book',
        genre.id,
        '2018',
@@ -318,7 +342,8 @@ SELECT 'Green Book',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Wolf of Wall Street',
        genre.id,
        '2013',
@@ -332,7 +357,8 @@ SELECT 'The Wolf of Wall Street',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Godfather',
        genre.id,
        '1972',
@@ -346,7 +372,8 @@ SELECT 'The Godfather',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Bohemian Rhapsody',
        genre.id,
        '2018',
@@ -360,7 +387,8 @@ SELECT 'Bohemian Rhapsody',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Catch Me If You Can',
        genre.id,
        '2002',
@@ -374,7 +402,8 @@ SELECT 'Catch Me If You Can',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Truman Show',
        genre.id,
        '1998',
@@ -388,7 +417,8 @@ SELECT 'The Truman Show',
 FROM genre
 WHERE genre.name = 'Drama';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Forrest Gump',
        genre.id,
        '1994',
@@ -404,7 +434,8 @@ WHERE genre.name = 'Drama';
 
 -- Comedy--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Kingsman: The Secret Service',
        genre.id,
        '2014',
@@ -418,7 +449,8 @@ SELECT 'Kingsman: The Secret Service',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Home Alone',
        genre.id,
        '1990',
@@ -432,7 +464,8 @@ SELECT 'Home Alone',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Night at the Museum',
        genre.id,
        '2006',
@@ -446,7 +479,8 @@ SELECT 'Night at the Museum',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Johnny English',
        genre.id,
        '2003',
@@ -460,7 +494,8 @@ SELECT 'Johnny English',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Hitch',
        genre.id,
        '2005',
@@ -474,7 +509,8 @@ SELECT 'Hitch',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Liar Liar',
        genre.id,
        '1997',
@@ -488,7 +524,8 @@ SELECT 'Liar Liar',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Gold Rush',
        genre.id,
        '1925',
@@ -502,22 +539,24 @@ SELECT 'The Gold Rush',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Spy',
        genre.id,
        '2015',
        '7.0',
        'Paul Feig',
        'Jude Law, Raad Rawi, Melissa McCarthy',
-       'A desk-bound CIA analyst volunteers to go undercover to infiltrate the world of a deadly arms dealer, and prevent diabolical global disaster.',
+       'A desk-bound CIA analyst volunteers to go undercover to infiltrating the world of a deadly arms dealer, and prevent diabolical global disaster.',
        'https://resizing.flixster.com/ThkoxQdZffRQ_cL1A0NvxttVY_0=/206x305/v2/https://flxt.tmsimg.com/assets/p11421676_p_v8_ab.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
-SELECT 'Forrest Gump',
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
+SELECT 'Me, Myself & Irene',
        genre.id,
        '2000',
        '6.6',
@@ -530,7 +569,8 @@ SELECT 'Forrest Gump',
 FROM genre
 WHERE genre.name = 'Comedy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Mr. & Mrs. Smith',
        genre.id,
        '2005',
@@ -546,7 +586,8 @@ WHERE genre.name = 'Comedy';
 
 -- Fantasy--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Doctor Strange',
        genre.id,
        '2016',
@@ -560,7 +601,8 @@ SELECT 'Doctor Strange',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Twilight',
        genre.id,
        '2008',
@@ -574,7 +616,8 @@ SELECT 'Twilight',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Mortal Kombat',
        genre.id,
        '2021',
@@ -588,7 +631,8 @@ SELECT 'Mortal Kombat',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Life of Pi',
        genre.id,
        '2012',
@@ -602,21 +646,23 @@ SELECT 'Life of Pi',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
-SELECT 'Pirates of the Caribbean: The Curse of the Black Pearl',
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
+SELECT 'Piratings of the Caribbean: The Curse of the Black Pearl',
        genre.id,
        '2003',
        '8.1',
        'Gore Verbinski',
        'Johnny Depp, Geoffrey Rush, Orlando Bloom',
-       'Blacksmith Will Turner teams up with eccentric pirate "Captain" Jack Sparrow to save his love, daughter of the governor, from former pirate allies, who are now undead.',
+       'Blacksmith Will Turner teams up with eccentric pirating "Captain" Jack Sparrow to save his love, daughter of the governor, from former pirating allies, who are now undead.',
        'https://resizing.flixster.com/1nw9GbNdPavAIOjDP8T0oEdgGXU=/206x305/v2/https://flxt.tmsimg.com/assets/p32093_p_v8_aa.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Edward Scissorhands',
        genre.id,
        '1990',
@@ -630,7 +676,8 @@ SELECT 'Edward Scissorhands',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'About Time',
        genre.id,
        '2013',
@@ -644,7 +691,8 @@ SELECT 'About Time',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Aquaman',
        genre.id,
        '2018',
@@ -658,7 +706,8 @@ SELECT 'Aquaman',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Maleficent ',
        genre.id,
        '2014',
@@ -672,7 +721,8 @@ SELECT 'Maleficent ',
 FROM genre
 WHERE genre.name = 'Fantasy';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Aladdin',
        genre.id,
        '2019',
@@ -688,21 +738,23 @@ WHERE genre.name = 'Fantasy';
 
 -- Mystery--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Inception',
        genre.id,
        '2010',
        '8.8',
        'Christopher Nolan',
        'Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page',
-       'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.',
+       'A thief who steals corporating secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.',
        'https://resizing.flixster.com/8X8J8sNXmCWDBaxo3vueONLRj00=/206x305/v2/https://flxt.tmsimg.com/assets/p7825626_p_v8_af.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Butterfly Effect',
        genre.id,
        '2004',
@@ -716,7 +768,8 @@ SELECT 'The Butterfly Effect',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Se7en',
        genre.id,
        '1995',
@@ -730,7 +783,8 @@ SELECT 'Se7en',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Now You See Me',
        genre.id,
        '2013',
@@ -744,21 +798,23 @@ SELECT 'Now You See Me',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Saw',
        genre.id,
        '2003',
        '7.6',
        'James Wan',
        'Cary Elwes, Leigh Whannell, Danny Glover',
-       'Two strangers awaken in a room with no recollection of how they got there, and soon discover they''re pawns in a deadly game perpetrated by a notorious serial killer.',
+       'Two strangers awaken in a room with no recollection of how they got there, and soon discover they''re pawns in a deadly game perpetratingd by a notorious serial killer.',
        'https://resizing.flixster.com/BvN7zBIDzzPw41T6dm_cApbRGEE=/206x305/v2/https://flxt.tmsimg.com/assets/p34813_p_v8_aw.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Memento',
        genre.id,
        '2000',
@@ -772,7 +828,8 @@ SELECT 'Memento',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Das Leben der Anderen',
        genre.id,
        '2006',
@@ -786,21 +843,23 @@ SELECT 'Das Leben der Anderen',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Murder on the Orient Express',
        genre.id,
        '2017',
        '6.5',
        'Kenneth Branagh',
        'Kenneth Branagh, Penélope Cruz, Willem Dafoe',
-       'When a murder occurs on the train on which he''s travelling, celebrated detective Hercule Poirot is recruited to solve the case.',
+       'When a murder occurs on the train on which he''s travelling, celebratingd detective Hercule Poirot is recruited to solve the case.',
        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2502165084.webp',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Death on the Nile',
        genre.id,
        '1978',
@@ -814,7 +873,8 @@ SELECT 'Death on the Nile',
 FROM genre
 WHERE genre.name = 'Mystery';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Sherlock Holmes',
        genre.id,
        '2009',
@@ -830,21 +890,23 @@ WHERE genre.name = 'Mystery';
 
 -- Sci-Fi--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'District 9',
        genre.id,
        '2009',
        '7.9',
        'Neill Blomkamp',
        'Sharlto Copley, David James, Jason Cope',
-       'Violence ensues after an extraterrestrial race forced to live in slum-like conditions on Earth finds a kindred spirit in a government agent exposed to their biotechnology.',
+       'Violence ensues after an extratingrrestrial race forced to live in slum-like conditions on Earth finds a kindred spirit in a government agent exposed to their biotechnology.',
        'https://resizing.flixster.com/hARzywszK8m6o09VG41yW9ISStY=/206x305/v2/https://flxt.tmsimg.com/assets/p177953_p_v8_ae.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Resident Evil',
        genre.id,
        '2002',
@@ -858,21 +920,23 @@ SELECT 'Resident Evil',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT '2012',
        genre.id,
        '2009',
        '5.8',
        'Roland Emmerich',
        'John Cusack, Thandiwe Newton, Chiwetel Ejiofor',
-       'A frustrated writer struggles to keep his family alive when a series of global catastrophes threatens to annihilate mankind.',
+       'A frustratingd writer struggles to keep his family alive when a series of global catastrophes threatens to annihilate mankind.',
        'https://resizing.flixster.com/p6R9NAHdVXF3o_4hUuuUhwUZoMU=/206x305/v2/https://flxt.tmsimg.com/assets/p193479_p_v8_aa.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Lucy',
        genre.id,
        '2014',
@@ -886,7 +950,8 @@ SELECT 'Lucy',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Dune',
        genre.id,
        '2021',
@@ -900,7 +965,8 @@ SELECT 'Dune',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Dark Knight Rises',
        genre.id,
        '2012',
@@ -914,21 +980,23 @@ SELECT 'The Dark Knight Rises',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Matrix',
        genre.id,
        '1999',
        '8.7',
        'Lana Wachowski, Lilly Wachowski',
        'Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss',
-       'When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.',
+       'When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborating deception of an evil cyber-intelligence.',
        'https://resizing.flixster.com/q1aWnhA588SmGiAht_9L3KXFUMA=/206x305/v2/https://flxt.tmsimg.com/assets/p22804_p_v8_av.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Avengers',
        genre.id,
        '2012',
@@ -942,7 +1010,8 @@ SELECT 'The Avengers',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Iron Man',
        genre.id,
        '2008',
@@ -956,24 +1025,10 @@ SELECT 'Iron Man',
 FROM genre
 WHERE genre.name = 'Sci-Fi';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
-SELECT 'Interstellar',
-       genre.id,
-       '2014',
-       '8.6',
-       'Christopher Nolan',
-       'Matthew McConaughey, Anne Hathaway, Jessica Chastain',
-       'A team of explorers travel through a wormhole in space in an attempt to ensure humanity''s survival.',
-       'https://resizing.flixster.com/kTXJKgfGpAcaD-4mPemzR7CyDwQ=/206x305/v2/https://flxt.tmsimg.com/assets/p10543523_p_v12_ar.jpg',
-       '2022-10-16 22:05:05 +00:00',
-       '2022-10-16 22:05:05 +00:00'
-FROM genre
-WHERE genre.name = 'Sci-Fi';
-
-
 -- Animation--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Ice Age',
        genre.id,
        '2002',
@@ -987,7 +1042,8 @@ SELECT 'Ice Age',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Zootopia',
        genre.id,
        '2016',
@@ -1001,7 +1057,8 @@ SELECT 'Zootopia',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Sen to Chihiro no kamikakushi',
        genre.id,
        '2001',
@@ -1015,7 +1072,8 @@ SELECT 'Sen to Chihiro no kamikakushi',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Kimi no na wa.',
        genre.id,
        '2016',
@@ -1029,7 +1087,8 @@ SELECT 'Kimi no na wa.',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Secert World Of Arrietty',
        genre.id,
        '2010',
@@ -1043,7 +1102,8 @@ SELECT 'The Secert World Of Arrietty',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Frozen',
        genre.id,
        '2013',
@@ -1057,7 +1117,8 @@ SELECT 'Frozen',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Monsters, Inc.',
        genre.id,
        '2001',
@@ -1071,7 +1132,8 @@ SELECT 'Monsters, Inc.',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Kung Fu Panda',
        genre.id,
        '2008',
@@ -1085,7 +1147,8 @@ SELECT 'Kung Fu Panda',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Lion King',
        genre.id,
        '2019',
@@ -1099,7 +1162,8 @@ SELECT 'The Lion King',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Toy Story',
        genre.id,
        '1995',
@@ -1113,7 +1177,8 @@ SELECT 'Toy Story',
 FROM genre
 WHERE genre.name = 'Animation';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Finding Nemo',
        genre.id,
        '2003',
@@ -1129,7 +1194,8 @@ WHERE genre.name = 'Animation';
 
 -- Thriller--------------------------------------------------------------
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Triangle',
        genre.id,
        '2009',
@@ -1143,7 +1209,8 @@ SELECT 'Triangle',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Orphan',
        genre.id,
        '2009',
@@ -1157,7 +1224,8 @@ SELECT 'Orphan',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Conjuring',
        genre.id,
        '2013',
@@ -1171,7 +1239,8 @@ SELECT 'The Conjuring',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Final Destination',
        genre.id,
        '2000',
@@ -1185,35 +1254,38 @@ SELECT 'Final Destination',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Escape Plan',
        genre.id,
        '2013',
        '6.7',
        'Mikael Håfström',
        'Sylvester Stallone, Arnold Schwarzenegger, Curtis James Jackson',
-       'When a structural-security authority finds himself set up and incarcerated in the world''s most secret and secure prison, he has to use his skills to escape with help from the inside.',
+       'When a structural-security authority finds himself set up and incarceratingd in the world''s most secret and secure prison, he has to use his skills to escape with help from the inside.',
        'https://resizing.flixster.com/PPNwU-FmIyiDW2P4F7lrgW9QE44=/206x305/v2/https://flxt.tmsimg.com/assets/p9911264_p_v8_ab.jpg',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Skyscraper',
        genre.id,
        '2018',
        '5.8',
        'Rawson Marshall Thurber',
        'Dwayne Johnson, Neve Campbell, Chin Han',
-       'A security expert must infiltrate a burning skyscraper, 225 stories above ground, when his family is trapped inside by criminals.',
+       'A security expert must infiltrating a burning skyscraper, 225 stories above ground, when his family is trapped inside by criminals.',
        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2527484082.webp',
        '2022-10-16 22:05:05 +00:00',
        '2022-10-16 22:05:05 +00:00'
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Mist',
        genre.id,
        '2007',
@@ -1227,7 +1299,8 @@ SELECT 'The Mist',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'Hannibal',
        genre.id,
        '2001',
@@ -1241,7 +1314,8 @@ SELECT 'Hannibal',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'The Meg ',
        genre.id,
        '2018',
@@ -1255,7 +1329,8 @@ SELECT 'The Meg ',
 FROM genre
 WHERE genre.name = 'Thriller';
 
-INSERT INTO movie (name, genre_id, year, rate, director, actor, description, poster_img_url, created_time, updated_time)
+INSERT INTO movie (name, genre_id, year, rating, director, actor, description, poster_img_url, created_time,
+                   updated_time)
 SELECT 'A Quiet Place',
        genre.id,
        '2018',

@@ -7,9 +7,10 @@ CREATE TABLE "genre"
 CREATE TABLE "movie"
 (
     id             BIGSERIAL PRIMARY KEY,
-    name           VARCHAR(255)             NOT NULL,
+    name           VARCHAR(255) UNIQUE      NOT NULL,
     genre_id       BIGINT                   NOT NULL REFERENCES "genre" (id),
     year           CHAR(4),
+    rating         VARCHAR(3),
     director       VARCHAR(128),
     actor          VARCHAR(255),
     description    VARCHAR(1000),
@@ -31,9 +32,9 @@ CREATE TABLE "user"
     username        VARCHAR(255) UNIQUE      NOT NULL,
     first_name      VARCHAR(128),
     last_name       VARCHAR(128),
-    password        VARCHAR(64)                 NOT NULL,
+    password        VARCHAR(64)              NOT NULL,
     email           VARCHAR(255) UNIQUE      NOT NULL,
-    profile_img_url  VARCHAR(255),
+    profile_img_url VARCHAR(255),
     created_time    TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_time    TIMESTAMP WITH TIME ZONE NOT NULL
 );
