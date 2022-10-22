@@ -1,0 +1,11 @@
+image: gradle:7.5.0
+
+pipelines:
+  pull-requests:
+    "**": #this runs as default for any branch not elsewhere defined
+      - step:
+          name: Build and Test
+          caches:
+            - gradle
+          script:
+            - gradle clean buildUat
