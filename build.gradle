@@ -43,3 +43,14 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.register("buildUat") {
+	group = "application"
+	description = "Build and test the application with the uat profile"
+	doFirst {
+		tasks.test.configure {
+			systemProperty("spring.profiles.active", "uat")
+		}
+	}
+	finalizedBy("build")
+}
