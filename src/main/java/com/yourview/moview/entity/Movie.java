@@ -5,9 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -22,27 +19,19 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column(columnDefinition = "bpchar(4)")
     private String year;
-
-    @Column
+    private String rating;
     private String director;
-
-    @Column
     private String actor;
-
-    @Column
     private String description;
-
-    @Column
     private String posterImgUrl;
 
     @CreationTimestamp
     private OffsetDateTime createdTime;
-
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
 

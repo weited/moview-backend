@@ -15,6 +15,7 @@ public class MovieGetDto {
     private String name;
     private Genre genre;
     private String year;
+    private String rating;
     private String director;
     private String actor;
     private String description;

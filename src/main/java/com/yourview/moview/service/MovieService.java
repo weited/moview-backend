@@ -41,6 +41,7 @@ public record MovieService(MovieRepository movieRepository, MovieMapper movieMap
             movie.setGenre(genreMapper.genreGetDtoToGenre(genreService.getGenreById(moviePostDto.getGenreId())));
         }
         movie.setName(moviePostDto.getName());
+        movie.setRating(moviePostDto.getRating());
         movie.setYear(moviePostDto.getYear());
         movie.setDirector(moviePostDto.getDirector());
         movie.setActor(moviePostDto.getActor());
@@ -51,7 +52,6 @@ public record MovieService(MovieRepository movieRepository, MovieMapper movieMap
     }
 
     public void deleteMovie(Long movieId) {
-
         movieRepository.deleteById(movieId);
     }
 

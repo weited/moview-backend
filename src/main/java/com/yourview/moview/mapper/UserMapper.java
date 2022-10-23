@@ -7,8 +7,7 @@ import com.yourview.moview.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
-
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
     User userPostDtoToUser(UserPostDto userPostDto);
     User userPutDtoToUser(UserPutDto userPutDto);

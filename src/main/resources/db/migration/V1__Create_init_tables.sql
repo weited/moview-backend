@@ -1,7 +1,7 @@
 CREATE TABLE "genre"
 (
     id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR(20) NOT NULL
+    name VARCHAR(20) UNIQUE NOT NULL
 );
 
 CREATE TABLE "movie"

@@ -6,7 +6,7 @@ import com.yourview.moview.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapper {
     Role roleGetDtoToRole(RoleGetDto roleGetDto);
     RoleGetDto roleToRoleGetDto(Role role);

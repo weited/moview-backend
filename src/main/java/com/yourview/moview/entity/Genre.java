@@ -3,7 +3,6 @@ package com.yourview.moview.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table
@@ -17,7 +16,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String name;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
