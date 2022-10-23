@@ -37,9 +37,9 @@ public class Comment {
     private Comment parentComment;
 
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "post_id", nullable = false)
-//    private Post post;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
 
 }
