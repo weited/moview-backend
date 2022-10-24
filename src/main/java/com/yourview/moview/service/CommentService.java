@@ -1,7 +1,7 @@
 package com.yourview.moview.service;
 
 import com.yourview.moview.dto.comment.CommentGetDto;
-import com.yourview.moview.dto.comment.CommentPatchDto;
+import com.yourview.moview.dto.comment.CommentPutDto;
 import com.yourview.moview.dto.comment.CommentPostDto;
 import com.yourview.moview.entity.Comment;
 import com.yourview.moview.exception.ResourceNotFoundException;
@@ -56,9 +56,9 @@ public record CommentService(CommentRepository commentRepository, CommentMapper 
         return allParentComments;
     }
 
-    public CommentGetDto updateComment(Long commentId, CommentPatchDto commentPatchDto) {
+    public CommentGetDto updateComment(Long commentId, CommentPutDto commentPutDto) {
         Comment comment = find(commentId);
-        comment.setText(commentPatchDto.getText());
+        comment.setText(commentPutDto.getText());
         return commentMapper.commentToCommentGetDto(commentRepository.save(comment));
     }
 

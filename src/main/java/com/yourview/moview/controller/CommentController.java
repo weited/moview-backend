@@ -1,7 +1,7 @@
 package com.yourview.moview.controller;
 
 import com.yourview.moview.dto.comment.CommentGetDto;
-import com.yourview.moview.dto.comment.CommentPatchDto;
+import com.yourview.moview.dto.comment.CommentPutDto;
 import com.yourview.moview.dto.comment.CommentPostDto;
 import com.yourview.moview.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +36,9 @@ public class CommentController {
         return commentService.getCommentByCommentId(commentId);
     }
 
-    @PatchMapping("/{commentId}")
-    public CommentGetDto update(@PathVariable Long commentId, @RequestBody CommentPatchDto commentPatchDto) {
-        return commentService.updateComment(commentId, commentPatchDto);
+    @PutMapping("/{commentId}")
+    public CommentGetDto update(@PathVariable Long commentId, @RequestBody CommentPutDto commentPutDto) {
+        return commentService.updateComment(commentId, commentPutDto);
     }
 
     @DeleteMapping("/{commentId}")
