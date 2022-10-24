@@ -4,32 +4,26 @@ import com.yourview.moview.dto.comment.CommentGetDto;
 import com.yourview.moview.dto.comment.CommentPutDto;
 import com.yourview.moview.dto.comment.CommentPostDto;
 import com.yourview.moview.entity.Comment;
+import com.yourview.moview.entity.Post;
 import com.yourview.moview.exception.ResourceNotFoundException;
 import com.yourview.moview.mapper.CommentMapper;
 import com.yourview.moview.repository.CommentRepository;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 
 @Service
 public record CommentService(CommentRepository commentRepository, CommentMapper commentMapper,
                              UserService userService) {
     private static final String RESOURCE = "Comment";
 
-    public List<CommentGetDto> getAllComments() {
-        return commentRepository.findAll().stream().map(commentMapper::commentToCommentGetDto).collect(Collectors.toList());
-    }
-
     public CommentGetDto createNewComment(CommentPostDto commentPostDto) {
         Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
         comment.setUser(userService.find(commentPostDto.getUserId()));
-        if (commentPostDto.getParentId() != 0L) {
-            comment.setParentComment(find(commentPostDto.getParentId()));
-        }
+        comment.setParentComment(find(commentPostDto.getParentId()));
         return commentMapper.commentToCommentGetDto(commentRepository.save(comment));
     }
 
@@ -39,7 +33,11 @@ public record CommentService(CommentRepository commentRepository, CommentMapper 
     }
 
     public List<CommentGetDto> getCommentByPostId(Long postId) {
-        List<Comment> allResults = commentRepository.findAll().stream().filter(comment -> Objects.equals(comment.getPost().getId(), postId)).toList();
+        Post post = new Post();
+        post.setId(postId);
+        Comment filter = new Comment();
+        filter.setPost(post);
+        List<Comment> allResults = commentRepository.findAll(Example.of(filter));
         List<CommentGetDto> allParentComments = allResults.stream().filter(comment -> Objects.isNull(comment.getParentComment())).sorted(Comparator.comparingLong(Comment::getId)).map(commentMapper::commentToCommentGetDto).toList();
         List<Comment> allChildComments = allResults.stream().filter(comment -> !Objects.isNull(comment.getParentComment())).toList();
         allParentComments.forEach(parent -> {

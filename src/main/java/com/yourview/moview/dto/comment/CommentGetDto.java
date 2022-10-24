@@ -14,7 +14,6 @@ public class CommentGetDto {
     private UserGetDto user;
     private Comment parentComment;
     private List<Comment> childComment;
-    //    private PostGetDto post;
     private OffsetDateTime createdTime;
     private OffsetDateTime updatedTime;
 

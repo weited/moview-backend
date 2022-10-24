@@ -19,9 +19,9 @@ public class CommentPostDto {
     private long parentId;
 
     @NotNull(message = "Post must be provided.")
-    private long postId;
+    private Long postId;
 
     @NotNull(message = "User must be provided.")
-    private long userId;
+    private Long userId;
 
 }
