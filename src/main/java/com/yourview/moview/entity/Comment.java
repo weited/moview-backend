@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table (name = "comment")
+@Table(name = "comment")
 @Getter
 @Setter
 @Builder
@@ -19,7 +19,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String text;
 
     @CreationTimestamp
@@ -28,7 +28,7 @@ public class Comment {
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -36,10 +36,7 @@ public class Comment {
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
-
-
 }

@@ -6,8 +6,10 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentGetDto {
     private long id;
     private String text;
@@ -16,5 +18,4 @@ public class CommentGetDto {
     private List<Comment> childComment;
     private OffsetDateTime createdTime;
     private OffsetDateTime updatedTime;
-
 }

@@ -14,6 +14,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CommentPutDto {
     @NotBlank(message = "Comment text must be provided.")
-    @Size(max = 800, message = "Comment text must be provided.")
+    @Size(max = 800, message = "Comment text must be than 800 characters.")
     private String text;
 }
