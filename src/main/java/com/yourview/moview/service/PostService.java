@@ -3,31 +3,48 @@ package com.yourview.moview.service;
 import com.yourview.moview.dto.Post.PostGetDto;
 import com.yourview.moview.dto.Post.PostPatchDto;
 import com.yourview.moview.dto.Post.PostPostDto;
+import com.yourview.moview.dto.Tag.TagGetDto;
+import com.yourview.moview.dto.Tag.TagSlimDto;
 import com.yourview.moview.dto.movie.MovieGetDto;
-import com.yourview.moview.dto.user.UserGetDto;
+import com.yourview.moview.dto.user.UserGetSlimDto;
 import com.yourview.moview.entity.Movie;
 import com.yourview.moview.entity.Post;
 import com.yourview.moview.entity.User;
 import com.yourview.moview.exception.ResourceNotFoundException;
-import com.yourview.moview.mapper.MovieMapper;
+import com.yourview.moview.mapper.PostMapper;
+import com.yourview.moview.mapper.TagMapper;
 import com.yourview.moview.mapper.UserMapper;
+import com.yourview.moview.mapper.MovieMapper;
 import com.yourview.moview.repository.MovieRepository;
 import com.yourview.moview.repository.PostRepository;
 import com.yourview.moview.repository.TagRepository;
 import com.yourview.moview.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
-public record PostService(PostRepository postRepository, TagRepository tagRepository
-        , TagService tagService, MovieRepository movieRepository, UserRepository userRepository
-        , MovieMapper movieMapper, UserMapper userMapper) {
+@RequiredArgsConstructor
+public class PostService {
 
     private static final String POST_RESOURCE = "Post";
     private static final String MOVIE_RESOURCE = "Movie";
     private static final String USER_RESOURCE = "User";
 
-    public PostGetDto createPost(PostPostDto postPostDto){
+    private final PostRepository postRepository;
+    private final TagRepository tagRepository;
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
+    private final TagService tagService;
+    private final PostMapper postMapper;
+    private final MovieMapper movieMapper;
+    private final UserMapper userMapper;
+    private final TagMapper tagMapper;
+
+    public PostGetDto createPost(PostPostDto postPostDto) {
         Post post = new Post();
 
         Movie movie = movieRepository.findById(postPostDto.getMovieId())
@@ -39,20 +56,27 @@ public record PostService(PostRepository postRepository, TagRepository tagReposi
         post.setContents(postPostDto.getContents());
         post.setTitle(postPostDto.getTitle());
         post.setMovie(movie);
-        post.setUser(user);
+        post.setAuthor(user);
         post = postRepository.save(post);
 
         return postToPostGetDto(post);
     }
 
-    public PostGetDto getPost(Long id){
+    public List<PostGetDto> getAllPost() {
+        return postRepository.findAll().stream().map(postMapper::postToPostGetDto).collect(Collectors.toList());
+    }
+
+    public PostGetDto getPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(POST_RESOURCE, id));
-
         return postToPostGetDto(post);
     }
 
-    public PostGetDto updatePost(PostPatchDto postPatchDto, Long id){
+    public TagGetDto getPostsByTagId(Long tagId) {
+        return tagService.getTagPosts(tagId);
+    }
+
+    public PostGetDto updatePost(PostPatchDto postPatchDto, Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(POST_RESOURCE, id));
 
@@ -64,22 +88,24 @@ public record PostService(PostRepository postRepository, TagRepository tagReposi
         return postToPostGetDto(post);
     }
 
-    public void deletePost(Long id){
+    public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
 
-    public PostGetDto postToPostGetDto(Post post){
+    public PostGetDto postToPostGetDto(Post post) {
         PostGetDto postGetDto = new PostGetDto();
         MovieGetDto movieGetDto = movieMapper.movieToMovieGetDto(post.getMovie());
-        UserGetDto userGetDto = userMapper.userToUserGetDto(post.getUser());
+        UserGetSlimDto user = userMapper.userToUserGetSlimDto(post.getAuthor());
+        List<TagSlimDto> tagList = tagMapper.tagListToSlimList(post.getTagList());
 
         postGetDto.setId(post.getId());
         postGetDto.setContents(post.getContents());
         postGetDto.setTitle(post.getTitle());
+        postGetDto.setTagList(tagList);
         postGetDto.setCreatedTime(post.getCreatedTime());
-        postGetDto.setUpdateTime(post.getUpdatedTime());
-        postGetDto.setMovieGetDto(movieGetDto);
-        postGetDto.setUserGetDto(userGetDto);
+        postGetDto.setUpdatedTime(post.getUpdatedTime());
+        postGetDto.setMovie(movieGetDto);
+        postGetDto.setAuthor(user);
         return postGetDto;
     }
 }

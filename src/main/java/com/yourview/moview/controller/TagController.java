@@ -2,6 +2,7 @@ package com.yourview.moview.controller;
 
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.dto.Tag.TagPostDto;
+import com.yourview.moview.dto.Tag.TagSlimDto;
 import com.yourview.moview.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class TagController {
     }
 
     @GetMapping("/{tagId}")
-    public TagGetDto get(@PathVariable Long tagId){
+    public TagSlimDto get(@PathVariable Long tagId){
         return tagService.getTag(tagId);
     }
 

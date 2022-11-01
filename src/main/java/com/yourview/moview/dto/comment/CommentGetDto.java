@@ -1,8 +1,11 @@
 package com.yourview.moview.dto.comment;
 
-import com.yourview.moview.dto.user.UserGetDto;
+import com.yourview.moview.dto.user.UserGetSlimDto;
 import com.yourview.moview.entity.Comment;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.List;
 public class CommentGetDto {
     private long id;
     private String text;
-    private UserGetDto user;
+    private UserGetSlimDto user;
     private Comment parentComment;
     private List<Comment> childComment;
     private OffsetDateTime createdTime;

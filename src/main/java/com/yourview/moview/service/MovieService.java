@@ -4,18 +4,25 @@ import com.yourview.moview.dto.movie.MovieGetDto;
 import com.yourview.moview.dto.movie.MoviePostDto;
 import com.yourview.moview.entity.Movie;
 import com.yourview.moview.exception.ResourceNotFoundException;
-import com.yourview.moview.mapper.GenreMapper;
 import com.yourview.moview.mapper.MovieMapper;
+import com.yourview.moview.mapper.GenreMapper;
 import com.yourview.moview.repository.MovieRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public record MovieService(MovieRepository movieRepository, MovieMapper movieMapper, GenreMapper genreMapper,
-                           GenreService genreService) {
+@RequiredArgsConstructor
+public class MovieService {
     private static final String RESOURCE = "Movie";
+
+    private final MovieRepository movieRepository;
+    private final GenreService genreService;
+    private final MovieMapper movieMapper;
+    private final GenreMapper genreMapper;
+
 
     public List<MovieGetDto> getAllMovies() {
         return movieRepository.findAll().stream().map(movieMapper::movieToMovieGetDto).collect(Collectors.toList());
