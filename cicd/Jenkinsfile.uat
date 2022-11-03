@@ -2,7 +2,11 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME        = "moview-backend"
+        IMAGE_NAME         = "moview-backend"
+        registryName       = "moview-backend"
+        registryCredential = "ACR"
+        dockerImage        = ""
+        registryUrl        = "moview.azurecr.io"
     }
 
     stages {
@@ -18,10 +22,11 @@ pipeline {
             steps {
                 echo 'Building the docker image ... '
                 sh 'docker build -t ${IMAGE_NAME}:latest .'
+                sh 'docker build -t ${registryName} .'
             }
         }
 
-        stage('Push image') {
+        stage('Push image to ECR') {
             steps {
                 echo 'Pushing image to ECR'
                 withAWS(credentials: 'jenkins_aws', region: 'ap-southeast-2') {
@@ -30,7 +35,20 @@ pipeline {
                     sh "docker push public.ecr.aws/j7g5d1x6/${IMAGE_NAME}:latest"
                 }
             }
-        } 
+        }
+
+        stage('Upload image to ACR') {
+            steps {
+                echo 'Pushing image to ACR'
+                sh "docker tag ${IMAGE_NAME}:latest ${registryName}" //tag ACR
+                script {
+                    dockerImage = docker.build registryName
+                    docker.withRegistry( "http://${registryUrl}", registryCredential ) {
+                    dockerImage.push()
+                    }
+                }
+            }
+        }
     }
 
     post {
