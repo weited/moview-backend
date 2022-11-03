@@ -65,4 +65,8 @@ public class MovieService {
     public Movie findById(Long movieId) {
         return movieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException(RESOURCE, movieId));
     }
+
+    public List<MovieGetDto> getMovieByGenreId(Long genreId) {
+        return movieRepository.findMoviesByGenreId(genreId);
+    }
 }

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("movies")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin
 public class MovieController {
 
     private final MovieService movieService;
@@ -27,6 +29,11 @@ public class MovieController {
     @GetMapping("/{movieId}")
     public MovieGetDto getMovieById(@PathVariable Long movieId) {
         return movieService.getMovieById(movieId);
+    }
+
+    @GetMapping("/genre/{genreId}")
+    public List<MovieGetDto> getMovieByGenreId(@PathVariable Long genreId) {
+        return movieService.getMovieByGenreId(genreId);
     }
 
     @PostMapping
