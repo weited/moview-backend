@@ -10,10 +10,6 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 public class UserPostDto {
-
-    @NotNull(message = "Please provide the role")
-    private long roleId;
-
     @NotBlank
     @Size(max = 128, message = "Username can not be more than 128 characters.")
     private String username;
@@ -37,6 +33,4 @@ public class UserPostDto {
     @Pattern(regexp = "/^(?:([A-Za-z]+):)?(\\/{0,3})([0-9.\\-A-Za-z]+)(?::(\\d+))?(?:\\/([^?#]*))?(?:\\?([^#]*))?(?:#(.*))?$/",
             message = "Your profile image url should be valid")
     private String profileImgUrl;
-
-
 }

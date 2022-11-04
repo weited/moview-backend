@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class UserGetDto {
     private long id;
-    private Role role;
+    private Set<Role> roles;
     private String username;
     private String firstName;
     private String lastName;

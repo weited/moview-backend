@@ -12,17 +12,12 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserPutDto {
-    @NotNull(message = "Please provide the role")
-    private long roleId;
-
     @NotBlank
     @Size(max = 128, message = "Name can not be more than 128 characters.")
     private String username;
 
-
     @Size(max = 128, message = "Name can not be more than 128 characters.")
     private String firstName;
-
 
     @Size(max = 128, message = "Name can not be more than 128 characters.")
     private String lastName;

@@ -1,5 +1,5 @@
 package com.yourview.moview.entity;
-import com.yourview.moview.entity.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -26,10 +27,10 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column()
+    @Column
     private String firstName;
 
-    @Column()
+    @Column
     private String lastName;
 
     @Column(nullable = false)
@@ -47,8 +48,11 @@ public class User {
     @UpdateTimestamp
     private OffsetDateTime updatedTime;
 
-
-    @JoinColumn(name = "role_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 }
