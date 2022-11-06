@@ -20,7 +20,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     @Operation(summary = "Create new user")
     public ResponseEntity<UserGetDto> createUser(@Valid @RequestBody UserPostDto userPostDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userPostDto));

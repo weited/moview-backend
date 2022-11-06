@@ -37,3 +37,6 @@ management:
   endpoint:
     health:
       show-details: always
+
+jwt:
+  secretKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCd6HnZ6xpWnmGsARdtONVL0abg56HfAKmZfX6GQLH0If8j6/rZdvPLjB6FlKiu"

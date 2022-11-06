@@ -10,6 +10,7 @@ import com.yourview.moview.entity.User;
 import com.yourview.moview.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +27,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserGetDto> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::userToUserGetDto).collect(Collectors.toList());
     }
 
     public UserGetDto createUser(UserPostDto userPostDto) {
+        String encodedPassword = passwordEncoder.encode(userPostDto.getPassword());
         User user = userMapper.userPostDtoToUser(userPostDto);
-        log.info("Saving new user {} to database", user.getEmail());
+        user.setPassword(encodedPassword);
+        log.info("Saving new user {} to database with {}", user.getEmail(), user.getPassword());
         return userMapper.userToUserGetDto(userRepository.save(user));
     }
 
