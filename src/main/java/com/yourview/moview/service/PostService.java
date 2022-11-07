@@ -124,4 +124,8 @@ public class PostService {
         postGetDto.setAuthor(user);
         return postGetDto;
     }
+
+    public Post find(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(POST_RESOURCE, postId));
+    }
 }

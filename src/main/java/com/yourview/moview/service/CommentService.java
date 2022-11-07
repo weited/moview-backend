@@ -17,13 +17,16 @@ import java.util.Objects;
 
 @Service
 public record CommentService(CommentRepository commentRepository, CommentMapper commentMapper,
-                             UserService userService) {
+                             UserService userService, PostService postService) {
     private static final String RESOURCE = "Comment";
 
     public CommentGetDto createNewComment(CommentPostDto commentPostDto) {
         Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
         comment.setUser(userService.find(commentPostDto.getUserId()));
-        comment.setParentComment(find(commentPostDto.getParentId()));
+        if(commentPostDto.getParentId() != 0L){
+            comment.setParentComment(find(commentPostDto.getParentId()));
+        }
+        comment.setPost(postService.find(commentPostDto.getPostId()));
         return commentMapper.commentToCommentGetDto(commentRepository.save(comment));
     }
 
