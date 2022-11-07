@@ -39,6 +39,21 @@ public class PostController {
         return postService.getPost(postId);
     }
 
+    @GetMapping("/user/{userId}")
+    public List<PostGetDto> getPostsByAuthor(@Valid @PathVariable Long authorId) {
+        return postService.getAllByAuthor(authorId);
+    }
+
+    @GetMapping("/createdtime")
+    public List<PostGetDto> orderByCreatedTime() {
+        return postService.getAllOrderByCreatedTime();
+    }
+
+    @GetMapping("/comments")
+    public List<PostGetDto> orderByComments() {
+        return postService.getAllOrderByComments();
+    }
+
     @PatchMapping("/{postId}")
     public PostGetDto update(@Valid @RequestBody PostPatchDto postPatchDto, @Valid @PathVariable Long postId) {
         return postService.updatePost(postPatchDto, postId);

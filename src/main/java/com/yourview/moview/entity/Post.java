@@ -2,6 +2,8 @@ package com.yourview.moview.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -48,4 +50,8 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tagList;
+
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 }

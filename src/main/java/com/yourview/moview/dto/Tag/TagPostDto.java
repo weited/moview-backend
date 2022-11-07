@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -16,4 +17,10 @@ public class TagPostDto {
     @NotBlank
     @Size(max = 30, message = "Tag name can not be more than 30 characters.")
     private String tagName;
+
+    @NotNull
+    private Long postId;
+
+    @NotNull
+    private Long userId;
 }

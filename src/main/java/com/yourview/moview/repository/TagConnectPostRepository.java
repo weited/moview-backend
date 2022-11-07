@@ -14,6 +14,12 @@ public interface TagConnectPostRepository extends JpaRepository<TagConnectPost, 
             "GROUP BY tag_id\n" +
             "ORDER BY nums DESC\n" +
             "LIMIT 6", nativeQuery = true)
-    List<Long[]> findHotTags(List<Post> postList);
+    List<Long[]> findHotTagsByPost(List<Post> postList);
+
+    @Query(value = "SELECT tag_id, count(tag_id) as nums FROM moview.tag_connect_post\n" +
+            "GROUP BY tag_id\n" +
+            "ORDER BY nums DESC\n" +
+            "LIMIT 6", nativeQuery = true)
+    List<Long[]> findHotTags();
 
 }

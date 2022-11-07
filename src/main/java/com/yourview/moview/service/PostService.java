@@ -17,25 +17,21 @@ import com.yourview.moview.mapper.UserMapper;
 import com.yourview.moview.mapper.MovieMapper;
 import com.yourview.moview.repository.MovieRepository;
 import com.yourview.moview.repository.PostRepository;
-import com.yourview.moview.repository.TagRepository;
 import com.yourview.moview.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
-
     private static final String POST_RESOURCE = "Post";
     private static final String MOVIE_RESOURCE = "Movie";
     private static final String USER_RESOURCE = "User";
-
     private final PostRepository postRepository;
-    private final TagRepository tagRepository;
     private final MovieRepository movieRepository;
     private final UserRepository userRepository;
     private final TagService tagService;
@@ -62,6 +58,25 @@ public class PostService {
         return postToPostGetDto(post);
     }
 
+    public List<PostGetDto> getAllByAuthor(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(USER_RESOURCE, id));
+
+        return postRepository.findAllByAuthor(user).stream().map(this::postToPostGetDto).collect(Collectors.toList());
+    }
+
+    public List<PostGetDto> getAllOrderByComments(){
+        List<Post> postList = postRepository.findAll();
+        postList.sort((o1,o2)-> (o2.getComments().size() - o1.getComments().size()));
+
+        return postList.stream().map(this::postToPostGetDto).collect(Collectors.toList());
+    }
+
+    public List<PostGetDto> getAllOrderByCreatedTime(){
+        return postRepository.findAllByOrderByCreatedTimeDesc().stream()
+                .map(this::postToPostGetDto).collect(Collectors.toList());
+    }
+
     public List<PostGetDto> getAllPost() {
         return postRepository.findAll().stream().map(postMapper::postToPostGetDto).collect(Collectors.toList());
     }
@@ -69,6 +84,7 @@ public class PostService {
     public PostGetDto getPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(POST_RESOURCE, id));
+
         return postToPostGetDto(post);
     }
 
