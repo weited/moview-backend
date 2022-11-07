@@ -63,9 +63,9 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                 .map(map -> new SimpleGrantedAuthority(map.get(AUTHORITY)))
                 .collect(Collectors.toSet());
 
-        Authentication authentication = new MoviewAuthenticationToken(
+        MoviewAuthenticationToken authentication = new MoviewAuthenticationToken(
                 userId,
-               username,
+                username,
                 null,
                 grantedAuthorities
         );
