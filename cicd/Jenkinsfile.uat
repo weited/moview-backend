@@ -2,11 +2,14 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME         = "moview-backend"
-        registryName       = "moview-backend"
-        registryCredential = "ACR"
-        dockerImage        = ""
-        registryUrl        = "moview.azurecr.io"
+        IMAGE_NAME           = "moview-backend"
+        registryName         = "moview-backend"
+        registryCredential   = "ACR"
+        dockerImage          = ""
+        registryUrl          = "moview.azurecr.io"
+        CLUSTER_NAME         = "moview_chuanhui_v3"
+        SERVICE_NAME         = "svc-sonia-2410"
+        TASK_DEFINITION_NAME = "moview_chuanhui"
     }
 
     stages {
@@ -33,6 +36,8 @@ pipeline {
                     sh "aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/j7g5d1x6"
                     sh "docker tag ${IMAGE_NAME}:latest public.ecr.aws/j7g5d1x6/${IMAGE_NAME}:latest"
                     sh "docker push public.ecr.aws/j7g5d1x6/${IMAGE_NAME}:latest"
+                    sh 'aws ecs update-service --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}" --task-definition "${TASK_DEFINITION_NAME}"'
+
                 }
             }
         }
