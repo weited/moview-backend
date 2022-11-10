@@ -5,6 +5,7 @@ import com.yourview.moview.dto.Post.PostPatchDto;
 import com.yourview.moview.dto.Post.PostPostDto;
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,9 @@ public class PostController {
         return postService.getAllPost();
     }
 
-    @GetMapping("/")
-    public TagGetDto getPostsByTagId(@RequestParam(value = "tagId") Long tagId) {
+    @GetMapping("/tag/{tagId}")
+    @Operation(summary = "Get all review posts by tag id")
+    public TagGetDto getPostsByTagId(@Valid @PathVariable Long tagId) {
         return postService.getPostsByTagId(tagId);
     }
 
@@ -40,8 +42,8 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<PostGetDto> getPostsByAuthor(@Valid @PathVariable Long authorId) {
-        return postService.getAllByAuthor(authorId);
+    public List<PostGetDto> getPostsByAuthor(@Valid @PathVariable Long userId) {
+        return postService.getAllByAuthor(userId);
     }
 
     @GetMapping("/createdtime")
