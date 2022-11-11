@@ -2,7 +2,9 @@ package com.yourview.moview.controller;
 
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.dto.Tag.TagPostDto;
+import com.yourview.moview.dto.Tag.TagSlimDto;
 import com.yourview.moview.service.TagService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,12 @@ import java.util.List;
 @RequestMapping("tags")
 public class TagController {
     private final TagService tagService;
+
+    @GetMapping
+    @Operation(summary = "Get all tags")
+    public List<TagSlimDto> getAll() {
+        return tagService.getAllTags();
+    }
 
     @PostMapping
     public TagGetDto create(@Valid @RequestBody TagPostDto tagPostDto){

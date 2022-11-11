@@ -2,6 +2,7 @@ package com.yourview.moview.service;
 
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.dto.Tag.TagPostDto;
+import com.yourview.moview.dto.Tag.TagSlimDto;
 import com.yourview.moview.entity.Tag;
 import com.yourview.moview.entity.User;
 import com.yourview.moview.exception.ResourceNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,10 @@ public class TagService {
             tagConnectUserService.createConnection(tag.getId(), tagPostDto.getUserId());
             return tagToTagDto(tag);
         }
+    }
+
+    public List<TagSlimDto> getAllTags() {
+        return tagRepository.findAll().stream().map(tagMapper::tagToTagSlimDto).collect(Collectors.toList());
     }
 
     @Transactional
