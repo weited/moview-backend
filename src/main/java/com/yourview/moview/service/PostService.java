@@ -65,6 +65,13 @@ public class PostService {
         return postRepository.findAllByAuthor(user).stream().map(this::postToPostGetDto).collect(Collectors.toList());
     }
 
+    public List<PostGetDto> getAllByMovie(Long id){
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MOVIE_RESOURCE, id));
+
+        return postRepository.findAllByMovie(movie).stream().map(this::postToPostGetDto).collect(Collectors.toList());
+    }
+
     public List<PostGetDto> getAllOrderByComments(){
         List<Post> postList = postRepository.findAll();
         postList.sort((o1,o2)-> (o2.getComments().size() - o1.getComments().size()));

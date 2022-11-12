@@ -41,9 +41,14 @@ public class PostController {
         return postService.getPost(postId);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<PostGetDto> getPostsByAuthor(@Valid @PathVariable Long userId) {
-        return postService.getAllByAuthor(userId);
+    @GetMapping("/user/{authorId}")
+    public List<PostGetDto> getPostsByAuthor(@Valid @PathVariable Long authorId) {
+        return postService.getAllByAuthor(authorId);
+    }
+
+    @GetMapping("/movie/{movieId}")
+    public List<PostGetDto> getPostsByMovie(@Valid @PathVariable Long movieId) {
+        return postService.getAllByMovie(movieId);
     }
 
     @GetMapping("/createdtime")
