@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "post")
@@ -44,14 +45,14 @@ public class Post {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
     @JoinTable(
             name = "post_tag",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    private List<Tag> tagList;
+    private Set<Tag> tagList;
 
     @Fetch(value = FetchMode.SUBSELECT)
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments;
 }

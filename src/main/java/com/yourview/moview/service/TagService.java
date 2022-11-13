@@ -2,7 +2,7 @@ package com.yourview.moview.service;
 
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.dto.Tag.TagPostDto;
-import com.yourview.moview.dto.Tag.TagSlimDto;
+import com.yourview.moview.dto.Tag.TagSlimGetDto;
 import com.yourview.moview.entity.Tag;
 import com.yourview.moview.entity.User;
 import com.yourview.moview.exception.ResourceNotFoundException;
@@ -26,29 +26,24 @@ public class TagService {
 
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
-
     private final UserRepository userRepository;
-
     private final TagConnectPostService tagConnectPostService;
-
     private final TagConnectUserService tagConnectUserService;
-
     private final TagConnectUserRepository tagConnectUserRepository;
 
     @Transactional
-    public TagGetDto createTag(TagPostDto tagPostDto){
-        if(tagRepository.findByName(tagPostDto.getTagName()).isEmpty()){
+    public TagGetDto createTag(TagPostDto tagPostDto) {
+        if (tagRepository.findByName(tagPostDto.getName()).isEmpty()) {
             Tag tag = new Tag();
-            tag.setName(tagPostDto.getTagName());
+            tag.setName(tagPostDto.getName());
 
             tag = tagRepository.save(tag);
 
             tagConnectPostService.createConnection(tag.getId(), tagPostDto.getPostId());
             tagConnectUserService.createConnection(tag.getId(), tagPostDto.getUserId());
             return tagToTagDto(tag);
-       }
-        else {
-            Tag tag = tagRepository.findByName(tagPostDto.getTagName()).get();
+        } else {
+            Tag tag = tagRepository.findByName(tagPostDto.getName()).get();
 
             tagConnectPostService.createConnection(tag.getId(), tagPostDto.getPostId());
             tagConnectUserService.createConnection(tag.getId(), tagPostDto.getUserId());
@@ -56,29 +51,33 @@ public class TagService {
         }
     }
 
-    public List<TagSlimDto> getAllTags() {
-        return tagRepository.findAll().stream().map(tagMapper::tagToTagSlimDto).collect(Collectors.toList());
+    @Transactional
+    public List<Tag> saveAll(List<Tag> tagList) {
+        return tagRepository.saveAll(tagList);
+    }
+
+    public List<TagSlimGetDto> getAllTags() {
+        return tagRepository.findAll().stream().map(tagMapper::tagToTagSlimGetDto).collect(Collectors.toList());
     }
 
     @Transactional
-    public List<TagGetDto> createTags(List<TagPostDto> tagPostDtoList){
+    public List<TagGetDto> createTags(List<TagPostDto> tagPostDtoList) {
         List<TagGetDto> res = new LinkedList<>();
         tagPostDtoList.forEach(tagPostDto -> res.add(createTag(tagPostDto)));
         return res;
     }
 
-    public TagGetDto getTag(Long id){
+    public TagGetDto getTag(Long id) {
         Tag tag = tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(TAG_RESOURCE, id));
 
         return tagToTagDto(tag);
     }
 
-    public List<TagGetDto> getTagsByUser(Long id){
+    public List<TagGetDto> getTagsByUser(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(USER_RESOURCE, id));
         List<TagGetDto> res = new LinkedList<>();
         tagConnectUserRepository.findAllByUser(user).stream().map(x -> x.getTag().getId()).distinct()
                 .toList().forEach(x -> res.add(tagToTagDto(tagRepository.findById(x).get())));
-
         return res;
     }
 
@@ -88,16 +87,16 @@ public class TagService {
         return tagMapper.tagToTagGetDto(tag);
     }
 
-    public TagGetDto updateTag(TagPostDto tagPostDto, Long id){
+    public TagGetDto updateTag(TagPostDto tagPostDto, Long id) {
         Tag tag = tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(TAG_RESOURCE, id));
-        tag.setName(tagPostDto.getTagName());
+        tag.setName(tagPostDto.getName());
 
-        tag =tagRepository.save(tag);
+        tag = tagRepository.save(tag);
         return tagToTagDto(tag);
     }
 
 
-    public void deleteTag(Long id){
+    public void deleteTag(Long id) {
         tagRepository.deleteById(id);
     }
 
@@ -105,11 +104,10 @@ public class TagService {
         return tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(TAG_RESOURCE, id));
     }
 
-    public TagGetDto tagToTagDto(Tag tag){
+    public TagGetDto tagToTagDto(Tag tag) {
         TagGetDto tagGetDto = new TagGetDto();
         tagGetDto.setId(tag.getId());
         tagGetDto.setName(tag.getName());
-
         return tagGetDto;
     }
 }

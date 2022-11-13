@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TagSlimDto {
+public class TagSlimGetDto {
     private long id;
     private String name;
 }

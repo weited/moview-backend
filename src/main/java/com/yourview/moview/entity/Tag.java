@@ -7,7 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tag")
@@ -24,13 +24,13 @@ public class Tag {
     @Column(nullable = false, unique = true, name = "tag_name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "post_tag",
             joinColumns = {@JoinColumn(name = "tag_id")},
             inverseJoinColumns = {@JoinColumn(name = "post_id")})
     @JsonIgnore
-    private List<Post> postList;
+    private Set<Post> postList;
 
     @CreationTimestamp
     @Column(name = "created_time")

@@ -6,21 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagPostDto {
-    @NotBlank
-    @Size(max = 30, message = "Tag name can not be more than 30 characters.")
+public class TagSlimPostDto {
+    @NotBlank(message = "Tag name must be provided")
+    @Size(max = 20, message = "Tag name can not be more than 20 characters.")
     private String name;
-
-    @NotNull
-    private Long postId;
-
-    @NotNull
-    private Long userId;
 }
