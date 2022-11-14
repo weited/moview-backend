@@ -81,6 +81,8 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
         String userInfoJson = objectMapper.writeValueAsString(userInfo);
 
         response.addHeader(jwtConfig.getAuthorization(), BEARER + jwtToken);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().print(userInfoJson);
         response.getWriter().flush();
         response.getWriter().close();
