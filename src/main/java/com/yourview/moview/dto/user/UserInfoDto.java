@@ -6,14 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
-public class UserGetDto {
+public class UserInfoDto {
     private long id;
     private Set<Role> roles;
     private String username;
@@ -21,6 +20,4 @@ public class UserGetDto {
     private String lastName;
     private String email;
     private String profileImgUrl;
-    private OffsetDateTime createdTime;
-    private OffsetDateTime updatedTime;
 }

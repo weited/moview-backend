@@ -1,6 +1,7 @@
 package com.yourview.moview.auth;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @Builder
+@Getter
 public class MoviewUserDetails implements UserDetails {
 
     private final String username;

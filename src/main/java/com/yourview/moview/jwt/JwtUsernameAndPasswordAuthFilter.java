@@ -2,6 +2,8 @@ package com.yourview.moview.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yourview.moview.auth.MoviewUserDetails;
+import com.yourview.moview.dto.user.UserInfoDto;
+import com.yourview.moview.service.UserService;
 import io.jsonwebtoken.Jwts;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,12 +30,14 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     private final AuthenticationManager authenticationManager;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
+    private final UserService userService;
 
-    public JwtUsernameAndPasswordAuthFilter(AuthenticationManager authenticationManager, SecretKey secretKey, JwtConfig jwtConfig) {
+    public JwtUsernameAndPasswordAuthFilter(AuthenticationManager authenticationManager, SecretKey secretKey, JwtConfig jwtConfig, UserService userService) {
         super.setFilterProcessesUrl(LOGIN_URL);
         this.authenticationManager = authenticationManager;
         this.secretKey = secretKey;
         this.jwtConfig = jwtConfig;
+        this.userService = userService;
     }
 
     @Override
@@ -70,6 +74,15 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
                 .signWith(secretKey)
                 .compact();
 
+
+        UserInfoDto userInfo = userService.getUserInfo(email);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userInfoJson = objectMapper.writeValueAsString(userInfo);
+
         response.addHeader(jwtConfig.getAuthorization(), BEARER + jwtToken);
+        response.getWriter().print(userInfoJson);
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }

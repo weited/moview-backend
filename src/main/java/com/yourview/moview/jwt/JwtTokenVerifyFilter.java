@@ -1,6 +1,7 @@
 package com.yourview.moview.jwt;
 
 import com.yourview.moview.auth.MoviewAuthenticationToken;
+import com.yourview.moview.auth.MoviewUserDetailService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -8,9 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class JwtTokenVerifyFilter extends OncePerRequestFilter {
 
     private static final String BEARER = "Bearer ";
@@ -34,6 +37,7 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
 
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
+    private final MoviewUserDetailService moviewUserDetailService;
 
     @Override
     @SneakyThrows
@@ -63,9 +67,11 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
                 .map(map -> new SimpleGrantedAuthority(map.get(AUTHORITY)))
                 .collect(Collectors.toSet());
 
+        UserDetails userDetails = moviewUserDetailService.loadUserByUsername(username);
+
         MoviewAuthenticationToken authentication = new MoviewAuthenticationToken(
                 userId,
-                username,
+                userDetails,
                 null,
                 grantedAuthorities
         );

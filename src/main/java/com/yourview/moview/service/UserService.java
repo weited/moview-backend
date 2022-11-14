@@ -1,6 +1,7 @@
 package com.yourview.moview.service;
 
 import com.yourview.moview.dto.user.UserGetDto;
+import com.yourview.moview.dto.user.UserInfoDto;
 import com.yourview.moview.dto.user.UserPutDto;
 import com.yourview.moview.dto.user.UserPostDto;
 import com.yourview.moview.entity.Role;
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService {
     private static final String RESOURCE = "User";
+    private static final String ROLE_USER = "ROLE_USER";
 
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -37,6 +41,12 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(userPostDto.getPassword());
         User user = userMapper.userPostDtoToUser(userPostDto);
         user.setPassword(encodedPassword);
+
+        Set<Role> roles = new HashSet<>();
+        Role role = roleService.getByRoleType(ROLE_USER);
+        roles.add(role);
+        user.setRoles(roles);
+
         log.info("Saving new user {} to database with {}", user.getEmail(), user.getPassword());
         return userMapper.userToUserGetDto(userRepository.save(user));
     }
@@ -74,6 +84,10 @@ public class UserService {
 
     public User getByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(RESOURCE, email));
+    }
+
+    public UserInfoDto getUserInfo(String email) {
+        return userMapper.userToUserInfoDto(getByEmail(email));
     }
 }
 
