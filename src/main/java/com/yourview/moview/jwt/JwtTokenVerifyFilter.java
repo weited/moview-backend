@@ -3,8 +3,10 @@ package com.yourview.moview.jwt;
 import com.yourview.moview.auth.MoviewAuthenticationToken;
 import com.yourview.moview.auth.MoviewUserDetailService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -54,30 +56,38 @@ public class JwtTokenVerifyFilter extends OncePerRequestFilter {
 
         String token = authHeader.replace(BEARER, "");
 
-        Jws<Claims> claimsJws = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token);
-        Claims body = claimsJws.getBody();
-        String username = body.getSubject();
-        long userId = (Integer) body.get("userId");
-        List<Map<String, String>> authorities = (List<Map<String, String>>) body.get(AUTHORITIES);
+        try {
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token);
+            Claims body = claimsJws.getBody();
+            String username = body.getSubject();
+            long userId = (Integer) body.get("userId");
+            List<Map<String, String>> authorities = (List<Map<String, String>>) body.get(AUTHORITIES);
 
-        Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream()
-                .map(map -> new SimpleGrantedAuthority(map.get(AUTHORITY)))
-                .collect(Collectors.toSet());
+            Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream()
+                    .map(map -> new SimpleGrantedAuthority(map.get(AUTHORITY)))
+                    .collect(Collectors.toSet());
 
-        UserDetails userDetails = moviewUserDetailService.loadUserByUsername(username);
+            UserDetails userDetails = moviewUserDetailService.loadUserByUsername(username);
 
-        MoviewAuthenticationToken authentication = new MoviewAuthenticationToken(
-                userId,
-                userDetails,
-                null,
-                grantedAuthorities
-        );
+            MoviewAuthenticationToken authentication = new MoviewAuthenticationToken(
+                    userId,
+                    userDetails,
+                    null,
+                    grantedAuthorities
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (SignatureException e) {
+            log.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("JWT token is expired: {}", e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } catch (Exception e) {
+            log.error("Cannot set user authentication: {}", e.getMessage());
+        }
         filterChain.doFilter(request, response);
     }
 }
