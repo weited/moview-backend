@@ -3,6 +3,7 @@ package com.yourview.moview.service;
 import com.yourview.moview.dto.Post.PostGetDto;
 import com.yourview.moview.dto.Post.PostPatchDto;
 import com.yourview.moview.dto.Post.PostPostDto;
+import com.yourview.moview.dto.Post.PostReactionDto;
 import com.yourview.moview.dto.Tag.TagGetDto;
 import com.yourview.moview.dto.Tag.TagSlimGetDto;
 import com.yourview.moview.dto.movie.MovieGetDto;
@@ -36,6 +37,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MovieRepository movieRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final TagService tagService;
     private final PostMapper postMapper;
     private final MovieMapper movieMapper;
@@ -108,7 +110,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(POST_RESOURCE, id));
 
-        return postToPostGetDto(post);
+        return postMapper.postToPostGetDto(post);
     }
 
     public TagGetDto getPostsByTagId(Long tagId) {
@@ -128,6 +130,47 @@ public class PostService {
         return postToPostGetDto(post);
     }
 
+    public void likesPost(Long postId, Long userId) {
+        User user = userService.find(userId);
+        Post post = find(postId);
+
+        post.getLikedUsers().add(user);
+
+        log.info("User {} liked post {}", user.getEmail(), post.getId());
+        postRepository.save(post);
+    }
+
+    public void dislikePost(Long postId, Long userId) {
+        User user = userService.find(userId);
+        Post post = find(postId);
+
+        Set<User> users = post.getLikedUsers();
+        User dislikeUser = users.stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst().orElseThrow(() -> new ResourceNotFoundException("User liked post record"));
+
+        users.remove(dislikeUser);
+
+        log.info("User {} disliked post {}", user.getEmail(), post.getId());
+        postRepository.save(post);
+    }
+
+    public PostReactionDto isUserLiked(Long postId, Optional<Long> userId) {
+        User user = userId.flatMap(userRepository::findById).orElse(null);
+        Post post = find(postId);
+
+        Set<User> users = post.getLikedUsers();
+        Optional<User> likedUser = userId.flatMap(aLong -> users.stream()
+                .filter(u -> u.getId().equals(aLong))
+                .findFirst());
+
+        PostReactionDto postReactionDto = new PostReactionDto();
+        postReactionDto.setId(post.getId());
+        postReactionDto.setCurrentUser(userMapper.userToUserGetSlimDto(user));
+        postReactionDto.setLike(likedUser.isPresent());
+        return postReactionDto;
+    }
+
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
@@ -142,6 +185,7 @@ public class PostService {
         postGetDto.setContents(post.getContents());
         postGetDto.setTitle(post.getTitle());
         postGetDto.setTagList(tagList);
+        postGetDto.setLikesCount(post.getLikesCount());
         postGetDto.setCreatedTime(post.getCreatedTime());
         postGetDto.setUpdatedTime(post.getUpdatedTime());
         postGetDto.setMovie(movieGetDto);

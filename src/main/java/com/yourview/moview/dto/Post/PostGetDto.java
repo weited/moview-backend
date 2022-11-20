@@ -20,6 +20,7 @@ public class PostGetDto {
     private String contents;
     private String title;
     private Set<TagSlimGetDto> tagList;
+    private long likesCount;
     private MovieGetDto movie;
     private UserGetSlimDto author;
     private OffsetDateTime createdTime;

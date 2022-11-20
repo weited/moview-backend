@@ -1,12 +1,12 @@
 package com.yourview.moview.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
@@ -51,6 +51,16 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private Set<Tag> tagList;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_likes_post",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private Set<User> likedUsers;
+
+    @Formula("(SELECT COUNT(*) FROM moview.user_likes_post up WHERE up.post_id = id)")
+    private long likesCount;
 
     @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
