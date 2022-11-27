@@ -8,4 +8,4 @@ pipelines:
           caches:
             - gradle
           script:
-            - gradle clean buildUat
+            - gradle clean build
